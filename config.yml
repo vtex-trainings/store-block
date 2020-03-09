@@ -1,0 +1,194 @@
+title: VTEX Store Block course
+tagline: Learn how to create custom blocks on VTEX Store Framework
+description: 'Using React and Graphql, you can export your components as VTEX blocks'
+template:
+  name: store-block
+  repo: store-block-template
+before:
+  - body: manifest.md
+    title: Conhecendo uma app VTEX IO
+    type: createIssue
+steps:
+  - title: Conhecendo uma app VTEX IO
+    description: >-
+      Neste passo, você irá aprender como se organizam os arquivos em uma app
+      VTEX IO e o que cada campo no manifest.json significa
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/1'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 1
+        data:
+          nextIssue: '2'
+      - body: component.md
+        title: Linkando uma app e utilizando-a no tema da loja
+        type: createIssue
+  - title: Linkando uma app e utilizando-a no tema da loja
+    description: >-
+      Após modificar algo no código da app, iremos linká-la e verificar o
+      resultado na loja, após haver adicionado a app no tema
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/2'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 2
+        data:
+          nextIssue: '3'
+      - body: props-implementation.md
+        title: Tornando o bloco countdown customizável
+        type: createIssue
+  - title: Tornando o bloco countdown customizável
+    description: >-
+      Através da API de props do React, você aprendenrá como tornar seus blocos
+      configuráveis com o Store Framework
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/3'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 3
+        data:
+          nextIssue: '4'
+      - body: countdown-implementation.md
+        title: Criando a funcionalidade do bloco countdown
+        type: createIssue
+  - title: Criando a funcionalidade do bloco countdown
+    description: >-
+      Utilizando os hooks do React.js, iremos finalizar a implementação do bloco
+      countdown
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/4'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 4
+        data:
+          nextIssue: '5'
+      - body: css-handles.md
+        title: Modificando o bloco countdown para ter um estilo configurável
+        type: createIssue
+  - title: Modificando o bloco countdown para ter um estilo configurável
+    description: >-
+      O VTEX IO oferece uma maneira para seus blocos poderem ter um estilo CSS
+      customizável: CSS Handles. Também veremos sobre a biblioteca de CSS
+      funcional Tachyons
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/5'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 5
+        data:
+          nextIssue: '6'
+      - body: messages.md
+        title: Práticas de internacionalização no VTEX IO
+        type: createIssue
+  - title: Práticas de internacionalização no VTEX IO
+    description: >-
+      Para que os nossos blocos sejam usados por todo mundo, deveremos nos
+      atentar às boas práticas de internacionalização suportadas pelo VTEX IO
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/6'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 6
+        data:
+          nextIssue: '7'
+      - body: separating-title.md
+        title: Componentizando o bloco countdown
+        type: createIssue
+  - title: Componentizando o bloco countdown
+    description: >-
+      Para que os blocos que criamos sejam flexíveis, devemos atentar a
+      granularidade dos componentes visuais de cada bloco.
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/7'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 7
+        data:
+          nextIssue: '8'
+      - body: what-is-graphql.md
+        title: O que é GraphQL?
+        type: createIssue
+  - title: O que é GraphQL?
+    description: >-
+      Utilizado por todo VTEX IO, GraphQL é uma tecnologia essencial para
+      criação de funcionalidades complexas nas lojas do VTEX IO
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/8'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 8
+        data:
+          nextIssue: '9'
+      - body: defining-resolver.md
+        title: Definindo um resolver GraphQL
+        type: createIssue
+  - title: Definindo um resolver GraphQL
+    description: >-
+      Neste passo você aprender o que é um resolver GraphQL e como definí-lo em
+      sua app
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/9'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 9
+        data:
+          nextIssue: '10'
+      - body: defining-client.md
+        title: Definindo um client no VTEX IO
+        type: createIssue
+  - title: Definindo um client no VTEX IO
+    description: >-
+      Para se comunicar com outras apps VTEX ou serviços externos, neste passo
+      você aprenderá como criar um client
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/10'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 10
+        data:
+          nextIssue: '11'
+      - body: creating-gif-component.md
+        title: Criando um bloco GIF
+        type: createIssue
+  - title: Criando um bloco GIF
+    description: Mapeando interface para um novo componente
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/11'
+    actions:
+      - type: respond
+        with: new-issue.md
+        issue: 11
+        data:
+          nextIssue: '12'
+      - body: react-apollo.md
+        title: Conectando back-end e front-end
+        type: createIssue
+  - title: Conectando back-end e front-end
+    description: Extraindo o GIF da API do Giphy
+    translations: {}
+    event: issues.closed
+    link: '{{ repoUrl }}/issues/12'
+    actions:
+      - type: respond
+        with: congrats_course.md
