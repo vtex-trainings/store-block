@@ -13,7 +13,6 @@ steps:
     description: >-
       Neste passo, você irá aprender como se organizam os arquivos em uma app
       VTEX IO e o que cada campo no manifest.json significa
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/1'
     actions:
@@ -29,7 +28,6 @@ steps:
     description: >-
       Após modificar algo no código da app, iremos linká-la e verificar o
       resultado na loja, após haver adicionado a app no tema
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/2'
     actions:
@@ -45,7 +43,6 @@ steps:
     description: >-
       Através da API de props do React, você aprendenrá como tornar seus blocos
       configuráveis com o Store Framework
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/3'
     actions:
@@ -61,7 +58,6 @@ steps:
     description: >-
       Utilizando os hooks do React.js, iremos finalizar a implementação do bloco
       countdown
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/4'
     actions:
@@ -78,7 +74,6 @@ steps:
       O VTEX IO oferece uma maneira para seus blocos poderem ter um estilo CSS
       customizável: CSS Handles. Também veremos sobre a biblioteca de CSS
       funcional Tachyons
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/5'
     actions:
@@ -94,7 +89,6 @@ steps:
     description: >-
       Para que os nossos blocos sejam usados por todo mundo, deveremos nos
       atentar às boas práticas de internacionalização suportadas pelo VTEX IO
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/6'
     actions:
@@ -110,7 +104,6 @@ steps:
     description: >-
       Para que os blocos que criamos sejam flexíveis, devemos atentar a
       granularidade dos componentes visuais de cada bloco.
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/7'
     actions:
@@ -124,7 +117,6 @@ steps:
         type: createIssue
   - title: Conectando backend e frontend
     description: Utilizando dados do catálogo da VTEX em seu componente
-    translations: !<tag:yaml.org,2002:js/undefined> ''
     event: issues.closed
     link: '{{ repoUrl }}/issues/8'
     actions:
