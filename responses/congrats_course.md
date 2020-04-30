@@ -1,3 +1,3 @@
-# Parabéns! 
+# Congratulations! 
 
-## Você finalizou este curso!
+### You have successfully completed this course!

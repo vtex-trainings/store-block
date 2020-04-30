@@ -1,32 +1,36 @@
-# Tornando o bloco countdown customizável
+# Making the countdown block customizable
 
-## Introdução
-Agora que temos um elemento `h1` renderizado, é possível utilizá-lo para mostrar informações que dependam de uma *prop* do componente. Para isso, alguns conceitos serão apresentados, já que são necessários para desenvolver uma aplicação.
+## Introduction
 
-## Conceitos
+Now we have an `h1` element rendered, it's possible to used it to display information that depend on the component's properties (*props*). For that, some concepts will be shown, given that they are essential for the app development. 
+
+## Concepts
 * **Hook**
 
-    *Hooks* são APIs que permitem utilizar funcionalidades do React dentro de componentes funcionais. Sem os *hooks*, um componente funcional em React só consegue renderizar elementos de UI. *Hooks* permitem, entre outras coisas, armazenar estado entre diferentes renderizações e executar efeitos colaterais no ciclo de vida de um componente. Obs.: eles não funcionam dentro de classes.
-    
-    Exemplo:
+    *Hooks* are APIs that allow using React features inside functional components. Without the *hooks*, a functional React component is only able to render UI elements. They, hereby, allow, among other things, state storage between different renders and execute side effets to the component's life cycle. Note: They do not work inside classes.
+
+    e.g: 
+
     ```typescript
     const [count, setCount] = useState(0)
     ```
-
-* **Interface para *props***
     
-    Define os tipos *Typescript* das props que o componente poderá receber, permitindo o *Intelissense*  da IDE sobre o componente que você criou.
+* ***props* interface**
+    
+    Defines the props *Typescript* typing that the component will receive, allowing IDE's intellisense about the created component. 
+
     ```typescript
     interface CountdownProps {
       exampleProp: string
     }
     ```
 
-* **Schema do bloco**
+* **Block's schema**
 
-    No VTEX IO, oferecemos uma ferramenta de gestão de conteúdo da loja chamada **Site Editor**. Com essa ferramenta, acessada através do *Admin VTEX*, podemos alterar imagens e texto dos blocos sem precisar modificar o código da loja.
+    In VTEX IO, we offer a content management tool called **Site Editor**. With it, through *VTEX Admin*, it's possible to change images, texts and behaviours of blocks without having to change the Store's code.
 
-    Para que o seu bloco possa **aceitar configurações do usuário**, é preciso exportar um `schema` no componente React responsável por aquele bloco utilizando [JSON *schema*](https://json-schema.org/). Isso irá, automaticamente, gerar um formulário para o Site Editor relativo ao bloco que você está desenvolvendo. Abaixo é possível ver um exemplo de *schema*:
+    In order for your block to **accept user customizations**, you need to export a `schema` in the React component responsible for the block using [JSON *schema*](https://json-schema.org/). This will, automatically, generate a form in Site Editor linked to the block that you're developing. Here's a *schema* example:
+
     ```js
     // react/Countdown.tsx
     Countdown.schema = {
@@ -36,24 +40,26 @@ Agora que temos um elemento `h1` renderizado, é possível utilizá-lo para most
         properties: {},
     }
     ```
-    O *schema* também é responsável por definir os textos que serão vistos pelo usuário do admin no formulário.
+    The *schema* is also responsible for defining the labels that will be displayed to the user when editing the block content on the form.
 
 ## Atividade
 
-1. Na interface definida no `Countdown.tsx`, adicione uma *prop* chamada `targetDate`, ela é do tipo *string*. Com isso, estamos definindo uma *prop* do componente que será utilizada para inicializar o contador.
+1. In the interface defined in `Countdown.tsx`, add a *prop* called `targetDate`, its type is *string*. We are, hence, defining a component *prop* that will be used to initialize the countdown.
+    
+    The *prop* definition itself is made through its declaration in the `CountdownProps` interface in the `Countdown.tsx` file, shown previously. Thus, add a line that define the `targetDate` *prop* of type *string*:
 
-    A definição da *prop* em si é feita através da declaração dela na interface `CountdownProps` no arquivo `Countdown.tsx`, mostrada anteriormente. Assim, adicione uma linha que defina uma *prop* chamada `targetDate`, do tipo *string*.
     ```diff
     // react/Countdown.tsx
     interface CountdownProps {
     +   targetDate: string    
     }
     ```
-2. Feito isso, é preciso utilizá-la no componente, substituindo o texto de antes, "Teste Countdown" por um outro texto, através do *Site Editor*. 
 
-    >No futuro, esse targetDate será utilizado para definir a data de término para o contador. Porém, por enquanto, esse campo pode ser genérico.
+2. Now, we need to use it on the component, substituting the text used used previously, `Countdown Test`, for another, using *Site Editor*.
 
-    Primeiramente, é preciso alterar o componente para utilizar a *prop* `targetDate` definida anteriormente. Para isso, é preciso adicionar dentro do componente React a variável a ser utilizada no `h1`. Você lembra do bloco de código do componente na etapa anterior? Vamos utilizá-lo novamente para fazer as alterações.
+    >Keep in mind that targetDate will be used to define the countdown ending date. However, for now, it will work as a dummy field.
+
+    First, change the component in order for it to use the `targetDate` prop. To do that, you need to use its variable inside the `h1` of the React component.
 
     ```tsx
     // react/Countdown.tsx
@@ -66,28 +72,30 @@ Agora que temos um elemento `h1` renderizado, é possível utilizá-lo para most
     }
     ```
 
-3. Além disso, para alterar essa propriedade através do *Site Editor*, é necessário adicionar essa mesma *prop* ao *schema*. Isso é feito através da adição de um objeto com chave `targetDate` dentro do objeto `properties` no *schema*. Ou seja:
-    ```diff
-    // react/Countdown.tsx
-    Countdown.schema = {
-      title: 'editor.countdown.title',
-      description: 'editor.countdown.description',
-      type: 'object',
-      properties: {
-    +   targetDate: {
-    +      title: 'Data final',
-    +      description: 'Data final utilizada no contador',
-    +      type: 'string',
-    +      default: null,
-    +   },
-      },
-    }
-    ```
-Pronto! Agora você pode alterar o conteúdo do texto através do *Site Editor*. Vamos ver como ficou? Vá até o *Site Editor* e clique em `Countdown` no menu lateral, isso abrirá o menu de edição da *app*, que será como a imagem abaixo.
+3. Furthermore, to be able to edit this property through *Site Editor*, it's necessary to add that same prop to the **schema**. This is done by adding the `targetDate` key to the `properties` object of the **schema**:
+  ```diff
+  // react/Countdown.tsx
+  Countdown.schema = {
+    title: 'editor.countdown.title',
+    description: 'editor.countdown.description',
+    type: 'object',
+    properties: {
+  +   targetDate: {
+  +      title: 'Final date',
+  +      description: 'Final date used in the countdown',
+  +      type: 'string',
+  +      default: null,
+  +   },
+    },
+  }
+  ```
 
-<img src="https://user-images.githubusercontent.com/19495917/74963531-a09b2500-53f0-11ea-84a4-85a27bb752f4.png" width="350" height="750"/>
+All set! Now you can change the text content through *Site Editor*. Go ahead to the *Site Editor* and click on `Countdown` on the side menu, this will open an edit menu, like the shown bellow:
 
-Agora, no campo abaixo do título, digite uma data no formato `AAAA-MM-DD` e veja a alteração, que passará a exibir o texto que você digitou. 
+![image](https://user-images.githubusercontent.com/19495917/80523072-e382f700-8963-11ea-892d-3922a99de487.png)
 
-![image](https://user-images.githubusercontent.com/19495917/74963805-1acba980-53f1-11ea-8091-d05cea1341ea.png)
+Now, in the field below the title, type the date in the format `AAAA-MM-DD` and see the change, that will then show the text you've typed! 
+
+![image](https://user-images.githubusercontent.com/19495917/80523458-85a2df00-8964-11ea-9e74-f6d2c9cf5ab2.png)
+
 

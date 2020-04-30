@@ -1,86 +1,90 @@
-# Modificando o bloco countdown para ter estilos configuráveis
+# Modifying the countdown block to have configurable styles
 
-## Introdução
-Agora que já implementamos o `countdown`, que tal adicionar um pouco de customização? Nessa etapa, você irá aprender conceitos básicos a respeito de CSS *handles* e Tachyons para, em seguida, customizar o estilo da sua *app*.
+## Introduction
+
+Now that we have implemented the `countdown`, how about adding a little customization? In this step, you will learn basic concepts about CSS _handles_ and Tachyons to customize the style of your _app_.
 
 ## CSS Handles
 
-Os *handles* de CSS são utilizados para customizar os componentes da sua loja através de classes de CSS no código do tema. Todas essas configurações são definidas através da *app* `vtex.css-handles`, responsável por declarar todos os pontos de customização do seu bloco.
+CSS _handles_ are used to customize your store's components through CSS classes in the theme code. All settings are defined through the _app_ `vtex.css-handles`, responsible for declaring all the customization points of your block.
 
-Definindo os nomes dos seus *handles* e adicionando aos seus respectivos elementos HTML, é possível entregar ao usuário do tema pontos de customização que que permitam criar *layouts* flexíveis. 
+By defining the names of your _handles_ and adding them to their respective HTML elements, it is possible to give the theme's user customization points that allow them to create flexible _layouts_.
 
 ## Tachyons
-O Tachyons é um *framework* para CSS funcional. Diferentemente de outros *frameworks* conhecidos, como o Bootstrap, ele não apresenta componentes UI "pré-buildados". Na verdade, seu objetivo é justamente separar as regras de CSS em partes pequenas e reutilizáveis. Esse tipo de estratégia é comumente conhecida como *Subatomic Design System* e, caso você tenha interesse, pode encontrar uma referência [neste link](https://daneden.me/2018/01/05/subatomic-design-systems/). Essa estratégia torna *frameworks* como o Tachyons muito flexíveis, escaláveis e rápidos.
 
-Grande parte das definições de Tachyons podem ser alteradas, de forma que sua loja passe a ter um estilo mais customizado. Para isso, basta definir um arquivo JSON na pasta `styles/configs`; essas informações podem ser encontradas de forma mais detalhada em: [Build a store using VTEX IO - Customizing styles](https://help.vtex.com/tracks/build-a-store-using-vtex-io--5qJr8BIQXAKec9CpBWrTNv/6L2qQHU5kwbmTSiYl4MCuD). 
+Tachyons is a _framework_ for functional CSS. Unlike other known _frameworks_, like Bootstrap, it does not have "pre-built" UI components. In fact, its purpose is, precisely, separate the CSS rules into small, reusable parts. This type of strategy is commonly known as _Subatomic Design System_ and, if you are interested, you can find a reference [in this link](https://daneden.me/2018/01/05/subatomic-design-systems/). This strategy makes _frameworks_ like Tachyons very flexible, scalable and fast.
 
-## Atividade
-1. Importe o *hook* `useCssHandles`. Para isso, volte ao `Countdown.tsx` e faça o *import*:
+A lot of the Tachyons' definitions can be changed, so that your store will have a more customized style. To do this, just define a JSON file in the `styles / configs` folder; this information can be found in more detail at: [Build a store using VTEX IO - Customizing styles](https://help.vtex.com/tracks/build-a-store-using-vtex-io--5qJr8BIQXAKec9CpBWrTNv/6L2qQHU5kwbmTSiYl4MCuD).
 
-    ```tsx
-    // react/Countdown.tsx
-    import { useCssHandles } from 'vtex.css-handles'
-    ```
+## Activity
 
-2. Além disso, defina em um *Array* todos os *handles* que serão necessários (neste caso, será utilizado apenas `'countdown'`):
+1. Import the `useCssHandles` _hook_. To do so, return to `Countdown.tsx` and do the _import_:
 
-    ```tsx
-    // react/Countdown.tsx
-    const CSS_HANDLES = ['countdown']
-    ```
+   ```tsx
+   // react/Countdown.tsx
+   import { useCssHandles } from "vtex.css-handles"
+   ```
 
-3. Utilize o `useCssHandles` no componente `Countdown` para definir o *handle* do `countdown`:
+2. Besides, define in a _Array_ all necessary _handles_ (in this case, only `'countdown'` will be used):
 
-    ```diff
-    // react/Countdown.tsx
-    const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = DEFAULT_TARGET_DATE }) => {
-      const [timeRemaining, setTime] = useState<TimeSplit>({
-        hours: '00',
-        minutes: '00',
-        seconds: '00'
-      })
+   ```tsx
+   // react/Countdown.tsx
+   const CSS_HANDLES = ["countdown"]
+   ```
 
-    + const handles = useCssHandles(CSS_HANDLES)
+3. Use the `useCssHandles` in the component `Countdown` to define the `countdown` _handle_:
 
-      tick(targetDate, setTime)
+   ```diff
+   // react/Countdown.tsx
+   const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = DEFAULT_TARGET_DATE }) => {
+     const [timeRemaining, setTime] = useState<TimeSplit>({
+       hours: '00',
+       minutes: '00',
+       seconds: '00'
+     })
 
-      return (
-        <div>
-          <h1>
-            { `${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}` }
-          </h1>
-        </div>
-      )
-    }
-    ```
+   + const handles = useCssHandles(CSS_HANDLES)
 
-4. Por fim, é preciso utilizar o *handle* no componente a fim de ver a customização. Para isso, é necessário utilizar a prop `className` com as classes a serem utilizadas e as classes de Tachyons, para os estilos globais.
-    ```diff
-    // react/Countdown.tsx
+     tick(targetDate, setTime)
 
-    import React from 'react'
-    ...
-    
-    const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = DEFAULT_TARGET_DATE }) => {
-      const [timeRemaining, setTime] = useState<TimeSplit>({
-        hours: '00',
-        minutes: '00',
-        seconds: '00'
-      })
+     return (
+       <div>
+         <h1>
+           { `${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}` }
+         </h1>
+       </div>
+     )
+   }
+   ```
 
-      const handles = useCssHandles(CSS_HANDLES)
+4. At last, it is needed to use the _handle_ in the component to see the customization. For this, use the prop `className` with the classes to be used and the Tachyons classes, for global styles.
 
-      tick(targetDate, setTime)
+   ```diff
+   // react/Countdown.tsx
 
-      return (
-    +   <div className={`${handles.countdown} t-heading-2 fw3 w-100 c-muted-1 db tc`}>
-          {`${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`}
-        </div>
-      )
-    }
-    ```
+   import React from 'react'
+   ...
 
-Vamos ver o resultado?
+   const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = DEFAULT_TARGET_DATE }) => {
+     const [timeRemaining, setTime] = useState<TimeSplit>({
+       hours: '00',
+       minutes: '00',
+       seconds: '00'
+     })
+
+     const handles = useCssHandles(CSS_HANDLES)
+
+     tick(targetDate, setTime)
+
+     return (
+   +   <div className={`${handles.countdown} t-heading-2 fw3 w-100 c-muted-1 db tc`}>
+         {`${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`}
+       </div>
+     )
+   }
+   ```
+
+Let's see the result?
 
 ![image](https://user-images.githubusercontent.com/19495917/75475280-457cab80-5977-11ea-938e-d3c2b532e891.png)
 

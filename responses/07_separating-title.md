@@ -1,15 +1,19 @@
-# Componentizando o bloco countdown
+# Componentizing the countdown block
 
-## Introdução
-Nessa etapa, a *app* tem dois elementos principais: o título e o contador. Porém, para obter uma maior flexibilidade de posicionamento e customização, é interessante que sejam separadas em dois blocos distintos. Para isso, é preciso apresentar brevemente o conceito de interfaces para, em seguida, ser desenvolvido um novo componente `Title`. Um exemplo de customização em termos de posicionamento, que será abordada nessa etapa, é:
-> E se eu quisesse que o título estivesse embaixo ou ao lado do contador?
+## Introduction
+
+In this step, the _app_ has two main elements: the title and the countdown. However, in order to obtain greater positioning and customization flexibility, it is interesting that they are separated into two distinct blocks. For this, it is necessary to briefly introduce the concept of interfaces, and then a new `Title` component will be developed. An example of customization in terms of positioning, which will be covered in this step, is:
+
+> What if I wanted the title to be under or beside the counter?
 
 ## Interface
-Uma interface funciona como um contrato, com restrições bem definidas de como os blocos funcionarão juntos. Define, então, um mapeamento que cria um bloco do Store Framework, a partir de um componente React. É importante destacar que o uso de interfaces, de forma a separar uma *app* em diversas interfaces torna o poder de customização muito maior.
 
-Ao definir a *app* na interface, a propriedade `component` é responsável por definir o componente React que será usado. É importante ressaltar que o nome do `component` tem que ser igual ao nome do arquivo do componente dentro da pasta `react/`.
+An interface works like a contract, with well-defined restrictions on how the blocks will work together. It then defines a mapping that creates a Store Framework block, from a React component. It is important to highlight that the use of interfaces, in order to separate an _app_ in several interfaces, makes the customization power much greater.
 
-Exemplo de `interfaces.json`:
+When defining an _app_ in the interface, the `component` property is responsible for defining the React component that will be used. It is important to note that the name of `component` must be the same as the file name of the component inside the `react/` folder.
+
+`interfaces.json` examples:
+
 ```json
 {
   "countdown": {
@@ -18,157 +22,177 @@ Exemplo de `interfaces.json`:
 }
 ```
 
-## Atividade
-Nessa atividade, será separado o título e adicionado à nossa loja embaixo do contador.
+## Activity
 
-### Alterando o componente `Countdown`
+In this activity, the title will be separated and added to the store below the countdown.
 
-1. Remova os *imports*, o `title` da interface e altere a constante do CSS *handles*:
-    ```diff
-    import React, { useState } from 'react'
-    import { TimeSplit } from './typings/global'
-    import { tick } from './utils/time'
-    import { useCssHandles } from 'vtex.css-handles'
-    -import { FormattedMessage } from 'react-intl'
+### Altering the `Countdown` component
 
-    interface CountdownProps {
-      targetDate: string,
+1. Remove the _imports_, the `title` from the interface and change the CSS _handles_ const, `CSS_HANDLES`:
+
+   ```diff
+   import React, { useState } from 'react'
+   import { TimeSplit } from './typings/global'
+   import { tick } from './utils/time'
+   import { useCssHandles } from 'vtex.css-handles'
+   -import { FormattedMessage } from 'react-intl'
+
+   interface CountdownProps {
+     targetDate: string,
    -  title: string
-    }
+   }
 
-    const DEFAULT_TARGET_DATE = (new Date('2020-03-02')).toISOString()
-    -const CSS_HANDLES = ['container', 'countdown', 'title']
-    +const CSS_HANDLES = ['countdown']
-    ```
-2. Agora, no componente React em si, é preciso retirar o `title` como *prop* recebida e a constante do texto do título, além de alterar o que é renderizado:
-    ```diff
-    //Countdown.tsx
-    - const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ title, targetDate = DEFAULT_TARGET_DATE }) => {
-    + const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = DEFAULT_TARGET_DATE }) => {
-      const [
-        timeRemaining,
-        setTime
-      ] = useState<TimeSplit>({
-        hours: '00',
-        minutes: '00',
-        seconds: '00'
-      })
+   const DEFAULT_TARGET_DATE = (new Date('2020-03-02')).toISOString()
+   -const CSS_HANDLES = ['container', 'countdown', 'title']
+   +const CSS_HANDLES = ['countdown']
+   ```
 
-    - const titleText = title || <FormattedMessage id="countdown.title" />
-      const handles = useCssHandles(CSS_HANDLES)
+2. Now, in the component itself, remove the `title` as a _prop_ given and also the title text constant, which changes what is being rendered:
 
-      tick(targetDate, setTime)
+   ```diff
+   //Countdown.tsx
+   - const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ title, targetDate = DEFAULT_TARGET_DATE }) => {
+   + const Countdown: StorefrontFunctionComponent<CountdownProps> = ({ targetDate = DEFAULT_TARGET_DATE }) => {
+     const [
+       timeRemaining,
+       setTime
+     ] = useState<TimeSplit>({
+       hours: '00',
+       minutes: '00',
+       seconds: '00'
+     })
 
-      return (
-          <div className={`${handles.container} t-heading-2 fw3 w-100 pt7 pb6 c-muted-1 db tc`}>
-    -        <div className={`${handles.title} db tc`}>
-    -          { titleText }
-    -        </div>
-            <div className={`db tc`}>
-              {`${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`}
-            </div>
-          </div>
-      )
-    }
-    ```
-3. Por fim, retire o título do *schema*:
-    ```diff
-    Countdown.schema = {
-      title: 'editor.countdown.title',
-      description: 'editor.countdown.description',
-      type: 'object',
-      properties: {
-    -   title: {
-    -     title: 'editor.countdown.title.title',
-    -     type: 'string',
-    -     default: null,
-    -   },
-        targetDate: {
-          title: 'editor.countdown.targetDate.title',
-          description: 'editor.countdown.targetDate.description',
-          type: 'string',
-          default: null,
-        },
-      },
-    }
-    ```
+   - const titleText = title || <FormattedMessage id="countdown.title" />
+     const handles = useCssHandles(CSS_HANDLES)
 
-### Criando um novo componente
+     tick(targetDate, setTime)
 
-1. Crie um novo arquivo dentro da pasta `/react`, chamado `Title.tsx`, ele será o novo componente do título. Nele, alguns *imports* precisam ser feitos. A estrutura básica do código é muito similar a do componente `Countdown`.
+     return (
+         <div className={`${handles.container} t-heading-2 fw3 w-100 pt7 pb6 c-muted-1 db tc`}>
+   -        <div className={`${handles.title} db tc`}>
+   -          { titleText }
+   -        </div>
+           <div className={`db tc`}>
+             {`${timeRemaining.hours}:${timeRemaining.minutes}:${timeRemaining.seconds}`}
+           </div>
+         </div>
+     )
+   }
+   ```
 
-2. Adicione os *imports* necessários e a constante do CSS *handles*:
-    ```tsx
-    //Title.tsx
-    import React from 'react'
-    import { FormattedMessage } from 'react-intl'
-    import { useCssHandles } from 'vtex.css-handles'
+3. At last, remove the title from the _schema_:
 
-    const CSS_HANDLES = ['title'] as const
-    ```
-3. Altere a função do componente:
-    ```tsx
-    //Title.tsx
-    const Title: StorefrontFunctionComponent<TitleProps> = ({title}) => {
-      const handles = useCssHandles(CSS_HANDLES)
-      const titleText = title || <FormattedMessage id="countdown.title" />
+   ```diff
+   Countdown.schema = {
+     title: 'editor.countdown.title',
+     description: 'editor.countdown.description',
+     type: 'object',
+     properties: {
+   -   title: {
+   -     title: 'I am a title',
+   -     type: 'string',
+   -     default: null,
+   -   },
+       targetDate: {
+         title: 'Final date',
+         description: 'Final date used in the countdown',
+         type: 'string',
+         default: null,
+       },
+     },
+   }
+   ```
 
-      return (
-        <div className={`${handles.title} t-heading-2 fw3 w-100 c-muted-1 db tc`}>
-          { titleText }
-        </div>
-      )
-    }
-    ```
-4. Adicione a interface, o *schema* e o *export*:
-    ```tsx
-    //Title.tsx
-    interface TitleProps {
-      title: string
-    }
+### Creating a new component
 
-    Title.schema = {
-      title: 'editor.countdown-title.title',
-      description: 'editor.countdown-title.description',
-      type: 'object',
-      properties: {
-        title: {
-          title: 'editor.countdown.title.title',
-          type: 'string',
-          default: null,
-        }
-      }
-    }
+1. Create a new file in the `/react` directory, named `Title.tsx`, it will be the new title component. In it, some _imports_ are needed. The basic structure of the code is very similar to the `Countdown` component's.
 
-    export default Title
-    ```
+2. Add the _imports_ needed and the CSS _handles_ constant:
 
-### Alterando o arquivo `interfaces.json`
-  Nesta altura, há dois componentes na *app*: o título e o contador. Porém, é preciso alterar o arquivo `interfaces.json`. É preciso declarar os componentes separadamente. No início, nossa interface tinha apenas o `Countdown`. É necessário adicionar o outro componente:
-  ```diff
-  {
-    "countdown": {
-      "component": "Countdown"
-    },
+   ```tsx
+   //Title.tsx
+   import React from "react"
+   import { FormattedMessage } from "react-intl"
+   import { useCssHandles } from "vtex.css-handles"
+
+   const CSS_HANDLES = ["title"] as const
+   ```
+
+3. Change the component's function:
+
+   ```tsx
+   //Title.tsx
+   const Title: StorefrontFunctionComponent<TitleProps> = ({ title }) => {
+     const handles = useCssHandles(CSS_HANDLES)
+     const titleText = title || <FormattedMessage id="countdown.title" />
+
+     return (
+       <div
+         className={`${handles.title} t-heading-2 fw3 w-100 c-muted-1 db tc`}
+       >
+         {titleText}
+       </div>
+     )
+   }
+   ```
+
+4. Add the interface, the _schema_ and the _export_:
+
+   ```tsx
+   //Title.tsx
+   interface TitleProps {
+     title: string
+   }
+
+   Title.schema = {
+     title: "editor.countdown-title.title",
+     description: "editor.countdown-title.description",
+     type: "object",
+     properties: {
+       title: {
+         title: "I am a title",
+         type: "string",
+         default: null,
+       },
+     },
+   }
+
+   export default Title
+   ```
+
+### Changing the `interfaces.json` file
+
+By now, there are two components in the _app_: the title and the countdown. However, it is necessary to change the `interfaces.json` file. It is needed to declare each one separately. At first, our interface only contained the `Countdown`. It is needed to add the other component:
+
+```diff
+{
+  "countdown": {
+    "component": "Countdown"
+  },
 +   "countdown.title": {
 +     "component": "Title"
 +   }
-  }
-  ```
+}
+```
 
-### Adicionando internacionalização
+### Adding internationalization
 
- Também é preciso adicionar ao *Messages* as traduções cujas chaves são as *strings* do *schema* que incluímos no arquivo `Title.tsx` logo acima. Como visto na etapa de *Messages*, vá à pasta `/messages` e adicione em cada um dos arquivos as traduções necessárias (`pt.json`, `es.json` e `en.json`). Abaixo há um exemplo para o caso do arquivo `en.json`:
+It is also needed to add to the _Messages_ the translations whose keys are the _strings_ of the _schema_ that we included in the `Title.tsx` file above. As seen in the _Messages_ step, go to the `/messages` folder and add the necessary translations to each file (`pt.json`, `es.json` and `en.json`). Below is an example for the case of the `en.json` file:
+
 ```diff
  {
-+  "countdown.title": "Countdown",
+   "countdown.title": "Countdown",
    "editor.countdown.title": "Countdown",
-   "editor.countdown.description": "Countdown component"
+   "editor.countdown.description": "Countdown component",
++  "editor.countdown-title.title": "Countdown title",
++  "editor.countdown-title.description": "Title component",
  }
 ```
 
-### Adicionando o novo bloco na home da loja
-Por fim, para ver as mudanças, volte ao tema para alterá-lo a fim de incluir o novo bloco. Para isso, basta adicionar à *home* o título! Assim como feito para o contador, é necessário adicionar o `countdown.title` como um bloco no arquivo `home.jsonc` do store-theme.
+### Adding the new block to the store home
+
+Finally, to see the changes, go back to the theme to change it to include the new block. To do so, simply add the title to _home_! Same as the countdown, it is necessary to add `countdown.title` as a block in the store-theme file `home.jsonc`.
+
 ```diff
 //home.jsonc
  {
@@ -183,5 +207,5 @@ Por fim, para ver as mudanças, volte ao tema para alterá-lo a fim de incluir o
  }
 ```
 
-Pronto! Agora vamos ver como deve ser o resultado:
-![image](https://user-images.githubusercontent.com/19495917/75560163-6d294d80-5a23-11ea-859d-35a8239ddfad.png)
+Done! Now let's see how the result should look like:
+![image](https://user-images.githubusercontent.com/19495917/80533839-a2dfa980-8974-11ea-80bb-2628bc10d8cc.png)

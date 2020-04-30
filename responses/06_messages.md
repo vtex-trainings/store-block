@@ -1,35 +1,35 @@
-# Práticas de internacionalização no VTEX IO
+# Internationalization practices in VTEX IO
 
-## Introdução
+## Introduction
 
-Com o bloco customizado na loja, devemos aprender a **internacionalizar** o conteúdo apresentado.
+With the customized block in the store, we need to learn to **internationalize** the content presented.
 
-É importante lembrar que os blocos devem sempre seguir boas práticas de localização, e **não devem mostrar strings _hardcoded_**, mas sim sensíveis a linguagem que a loja opera.
+It is important to remember that blocks must always follow good localization practices, and **must not show *hardcoded*** strings, but ones that are sensitive to the language that the store operates.
 
-Não se preocupe, você não precisará adicionar traduções de todos os textos para as variadas linguagens nas quais o Store Framework é usado. Portanto, nessa etapa, serão apresentados conceitos acerca da internacionalização de _apps_ e como fazê-la.
+Don't worry, you won't need to add translations of all texts for the various languages in which the Store Framework is used. Therefore, in this stage, will be presented concepts about the internationalization of _apps_ and how to do it.
 
-## As _Messages_
+## The _Messages_
 
-O conceito de _messages_ facilita a adição de novos idiomas ao tema. As _messages_ centralizam todos os serviços de tradução na plataforma. Dada um texto a ser traduzido, _Messages_ irá primeiramente checar o contexto definido pelo usuário para, em seguida, checar as traduções das _apps_ e, por fim, passa pelo sistema de tradução automática.
+The concept of _messages_ makes it easy to add new languages ​​to the theme. The _Messages_ centralize all translation services on the platform. Given a text to be translated, _Messages_ will first check the user-defined context, then check the translations of the _apps_ and, finally, go through the automatic translation system.
 
-Na estrutura do diretório, é possível observar que há uma pasta chamada `messages`, que apresenta três arquivos principais: `pt.json`, `en.json` e `es.json`, cada um responsável pelas traduções: português, inglês e espanhol, respectivamente. Além disso, a fim de fornecer traduções automáticas melhores, é utilizado o arquivo `context.json`, responsável por evitar ambiguidades.
+In the directory structure, you can see that there is a folder called `messages`, which has three main files: `pt.json`, `en.json` and`es.json`, each responsible for the translations: Portuguese, English and Spanish, respectively. In addition, in order to provide better automatic translations, the `context.json` file is used, which is responsible for avoiding ambiguities.
 
-Para utilizar tais definições, os arquivos de tradução mencionados anteriormente são JSON, cujas chaves são as mensagens e os valores são as traduções.
+To use such definitions, the translation files mentioned above are JSON, whose keys are messages and values ​​are translations.
 
-> O arquivo `context.json` é necessário e precisa conter todas as mensagens, além de oferecer as traduções automáticas em casos excepcionais.
+> The `context.json` file is necessary and must contain all messages, besides offering automatic translations in exceptional cases.
 
-## Atividade
+## Activity
 
-Você já deve ter aprendido a usar o nosso **builder _messages_**, e será através dele que serão adicionadas _strings_ internacionalizadas nos componentes.
+You must have learned how to use our **builder _messages_**, and it will be through it that internationalized _strings_ will be added to the components.
 
-1. Para isso, **na pasta _messages_**, adicione agora uma mensagem de **título para o componente**:
+1. To do so, **in the directory _messages_**, add now a message for the **title of the component**:
 
    `messages/pt.json`
 
    ```diff
    {
      ...,
-   +  "countdown.title": "Contagem Regressiva"
+   +	"countdown.title": "Contagem Regressiva"
    }
    ```
 
@@ -38,7 +38,7 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    ```diff
    {
      ...,
-   +  "countdown.title": "Countdown"
+   +	"countdown.title": "Countdown"
    }
    ```
 
@@ -47,7 +47,7 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    ```diff
    {
      ...,
-   +  "countdown.title": "Cuenta Regresiva"
+   +	"countdown.title": "Cuenta Regresiva"
    }
    ```
 
@@ -56,24 +56,29 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    ```diff
    {
      ...,
-   +  "countdown.title": "Countdown"
+   +	"countdown.title": "Countdown"
    }
    ```
 
-2. Feito isso, para **renderizar o título** deve-se usar o componente `FormattedMessage` da biblioteca [react-intl](https://github.com/formatjs/react-intl).
+2. After that, to **render the title** the component `FormattedMessage` of the lib [react-intl](https://github.com/formatjs/react-intl) must be used.
 
-   > A biblioteca _react-intl_ dá suporte a várias maneiras de configuração e internacionalização, vale a pena verificá-las.
+   > The lib _react-intl_ supports many ways of configuration and internationalization, it is worth checking it out.
 
-3. Adicione a biblioteca usando `yarn add react-intl` na pasta _react_
-4. No código do seu componente `Countdown.tsx` **importe o FormattedMessage**
-   ```diff
-   +  import { FormattedMessage } from 'react-intl'
+3. Add the lib using `yarn add react-intl` in the _react_ directory
+
+4. In your component's code, `Countdown.tsx`, **import the FormattedMessage**
+
+   ```tsx
+   import { FormattedMessage } from 'react-intl'
    ```
-5. Adicione uma constante que será o seu título:
+
+5. Add a const that will be your title:
+
    ```tsx
    const titleText = title || <FormattedMessage id="countdown.title" />
    ```
-6. Agora, junte o título e o contador para renderizá-los. Para isso, defina um container por fora. Além disso, o texto do título será passado através da _prop_ `title`:
+
+6. Now, join the title to the countdown to render. To do so, define a container outside. Besides, the text for the title will be passes using the _prop_ `title`:
 
    ```tsx
    const Countdown: StorefrontFunctionComponent<CountdownProps> = ({
@@ -102,13 +107,14 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    }
    ```
 
-   Note que são utilizados três _handles_ **novos**: _container_, _countdown_ e _title_. Dessa forma, lembre-se de declará-los na constante `CSS_HANDLES`, vista na etapa anterior:
+   Note that three **new** _handles_ are used: _container_, _countdown_ and _title_. Therefore, remember to declare them in the const `CSS_HANDLES`, seen in the previous step:
 
    ```tsx
    const CSS_HANDLES = ["container", "countdown", "title"]
    ```
 
-7. Por fim, é preciso adicionar a _prop_ de `title` no _schema_:
+7. At last, it is needed to add the `title` _prop_ in the _schema_:
+
    ```diff
    Countdown.schema = {
      title: 'editor.countdown.title',
@@ -116,13 +122,13 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
      type: 'object',
      properties: {
    +   title: {
-   +     title: 'Sou um título',
+   +     title: 'I am a title',
    +     type: 'string',
    +     default: null,
    +   },
        targetDate: {
-         title: 'Data final',
-         description: 'Data final usada no contador',
+         title: 'Final date',
+         description: 'Final date used in the countdown',
          type: 'string',
          default: null,
        },
@@ -130,6 +136,7 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    }
    ```
 
-Pronto! Agora, para testar sua loja em outros idiomas basta adicionar a _query string_ `/?cultureInfo=pt-br` ou `/?cultureInfo=en-ar` na URL, por exemplo. Ao utilizar tal URL, o resultado esperado é esse aqui:
+Done! Now, to try out your store in another languages, you just need to add the _query string_ `/?cultureInfo=pt-br` or `/?cultureInfo=es-ar` on the URL, for example. By using the first URL, the expected result is this one:
 
-![image](https://user-images.githubusercontent.com/19495917/75484759-23d7f000-5988-11ea-8b0a-63a5fce4ea7e.png)
+![image](https://user-images.githubusercontent.com/19495917/80527977-99057880-896b-11ea-9305-8921d580a1f1.png)
+

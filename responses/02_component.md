@@ -1,21 +1,24 @@
-# Linkando uma app e utilizando-a no tema da loja
+# Linking an app and using it on a store's theme
 
-## Introdução
-Para desenvolver um bloco de frente de loja, similar aos que oferecemos nativamente no Store Framework, utilizamos a biblioteca de desenvolvimento de UIs **[React.js](https://reactjs.org/)**.
+## Introduction
 
-### Um pouco sobre a tecnologia
+To develop a store front block, like the ones provided natively in Store Framework, we use the UI development library **[React.js](https://reactjs.org/)**.
 
-A unidade básica de desenvolvimento em **React** é o **componente**, onde pode ser implementada a interface visual do componente, como também sua lógica de estado, ou recuperação de dados. Seguindo as recomendações mais modernas de desenvolvimento, iremos focar no uso da [**API de Hooks**](https://reactjs.org/docs/hooks-intro.html) do *React*, não utilizando de *classes* para a construção dos componentes.
+## A little about the tool
 
-No VTEX IO, adotamos [**Typescript**](https://www.typescriptlang.org/) como linguagem padrão para programação *frontend*. Apesar de ser necessário aprender sintaxes novas, o esforço é rapidamente recompensado! Utilizando Typescript, ganha-se alta previsibilidade de *bugs*, por oferecer tipagem estática. Além disso, com as IDEs certas, é possível aumentar a velocidade de implementação através de um *code completion* mais esperto, com a tipagem de objetos no código.
+*React*'s basic development unit is a **component**, in which should be implemented all-in-one the logical operation, visual interface and data retrieval of an UI element. Following the most recent recommendation, we will focus our usage in the [**Hook API**](https:/**/reactjs.org/docs/hooks-intro.html), not using *class* definition for component building. 
 
-Neste curso, **será utilizado exclusivamente Typescript**. Caso você não tenha familiaridade com a linguagem, será uma excelente oportunidade de experimentá-la!
+In VTEX IO, we adopt [**Typescript**](https://www.typescriptlang.org/) as default language for *frontend* programming. Despite the complexity of learning new syntaxes, the effort is quickly rewarded! Using Typescript, the bug anticipation is enhanced, because of its static typing. Besides that, with the right IDEs, it's possible to increase the development speed with a smarter *code completion* of the code objects. 
 
-### Objetivo dessa Etapa
-Como você já tem familiaridade com o Store Framework, já sabe que utilizamos blocos, como `shelf` e  `sku-selector`, para a montagem de uma VTEX IO Store. Nesta etapa você irá criar um bloco que será utilizado no tema da *home page* de sua loja.
+In this course, we'll use Typescript exclusively. If you're not familiar with the language, it will be a great chance to give it a try!
 
-## Atividade
-1. No *template* clonado localmente, abra o arquivo `Countdown.tsx`:
+## Step objective 
+
+Since you're already familiar to Store Framework, you know that we use blocks, like `shelf` and `sku-selector`, to create a VTEX IO store. In this step you're going to create a block that is going to be used in your store's home page theme.
+
+## Activity
+
+1. In the local template cloned, open up the `Countdown.tsx` file:
 
     ```tsx
     //react/Countdown.tsx
@@ -37,38 +40,38 @@ Como você já tem familiaridade com o Store Framework, já sabe que utilizamos 
     export default Countdown
     ```
 
-2. Para ver o seu componente na *home page*, linke o tema em um terminal e a app em outro terminal. Adicione uma *tag* `h1` dentro do nosso componente e declarar o bloco no tema.
+2. To see you component in the home page, link the theme in one terminal and the app in another. Add a `h1` tag inside the component and declare the block on the theme.
+
     ```diff
     const Countdown: StorefrontFunctionComponent<CountdownProps> = ({}) => {
-    -    return <div></div>
-    +    return (
-    +      <div>
-    +        <h1>Teste Countdown</h1>
-    +      </div>
-    +    )
+    -   return <div></div>
+    +   return (
+    +     <div>
+    +       <h1>Countdown Test</h1>
+    +     </div>
+    +   )
     }
     ```
 
-    >Para que o componente seja visto funcionando na loja, é preciso declarar o bloco que a *app* define no tema. Em primeiro lugar, será necessário ter um tema para adicionar a *app*, para isso, será necessário cloná-lo do *Github*. Nesse curso, o `store-theme` será utilizado. Para clonar o repositório, basta executar o seguinte comando:
-
+    >In order for a component to be seen in a functional store, you need to declare the block, the app defines, in the theme. For that, hereby, we need to first have a theme to add the app to. In this course, we'll use `vtex.store-theme`. To clone the repository just run a:
     ```
     git clone https://github.com/vtex-apps/store-theme.git
     ```
 
-3. Com o repositório clonado, vá ao terminal para deslinkar quaisquer temas ou *apps* que estejam linkados. Para isso, basta digitar o seguinte comando:
+3. To avoid conflicts, go to your terminal and unlink any theme or apps you have linked. To do that, head just run the following command: 
+
     ```
     vtex unlink --all
     ```
-4. Com o repositório já clonado, vá até a pasta com `cd store-theme`; linke o tema no seu *workspace*.
-    ```
-    vtex link
-    ```
-5. Agora, com o tema linkado, é preciso também linkar a *app*. Para isso, vá até a pasta da *app*, `store-block`, repositório do Github que foi criado quando você iniciou o curso, e faça o *link*.
+
+4. With the repository cloned, go to its folder (`cd store-theme`) and link the theme on your workspace: 
+
     ```
     vtex link
     ```
 
-5. Para que a *app* seja utilizada no tema, é preciso adicioná-la às suas dependências, que como visto anteriormente, ficam no `manifest.json`. Dessa forma, adicione ao manifesto do tema, que se encontra na pasta `store-theme`, "vtex.countdown" como dependência. A versão dela está definida no manifesto da *app* (`0.0.1`). Feito isso, o JSON terá mais uma linha, como mostrado abaixo:
+5. In order for the app to be used on the theme, we have to add it to the theme's dependencies, that, as stated before, is in the `manifest.json`. Therefore, head to the theme's manifest in `store-theme` folder and add `vtex.countdown` as a dependency. Its version is defined in its manifest (`0.0.1`). The manifest will then have one extra line like it is defined bellow: 
+
     ```diff
     {
         ...
@@ -80,7 +83,8 @@ Como você já tem familiaridade com o Store Framework, já sabe que utilizamos 
         ...
     }
     ```
-5. Por fim, é preciso adicionar o bloco na loja. Dentro do arquivo `store-theme/store/blocks/home/home.jsonc`, declare um bloco chamado `"countdown"`. 
+
+6. Lastly, we need to add the block to the store. Inside the file `store-theme/store/blocks/home/home.jsonc`, declare `countdown` block: 
     ```
     {
         "store.home": {
@@ -93,7 +97,10 @@ Como você já tem familiaridade com o Store Framework, já sabe que utilizamos 
         ...
     }
     ```
-O resultado esperado é encontrar um *header* na home da sua loja, como a imagem abaixo:
 
-![image](https://user-images.githubusercontent.com/19495917/74960422-11d7d980-53eb-11ea-9d32-f0aa1340f0af.png)
+The expected result is to find a h1 in the top of the store, you can see it below: 
+
+<!-- TODO: Correct the image translation !-->
+
+![image](https://user-images.githubusercontent.com/19495917/80492927-0e0c8a00-893b-11ea-8a1d-aaad2874a014.png)
 

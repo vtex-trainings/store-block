@@ -1,28 +1,32 @@
-# Conectando _backend_ e _frontend_
+# Connecting _backend_ and _frontend_
 
-## Introdução
+## Introduction
 
-Agora aprenderemos como recuperar dados do _backend_ e exibí-los na interface. O VTEX IO utiliza [GraphQL](https://graphql.org/) como linguagem/tecnologia para transferência de dados, o que torna a programação dos nossos componentes bastante simples. Iremos modificar o nosso componente Countdown para buscar o _targetDate_ do **campo `releaseDate` de um produto da VTEX**. Para realizar queries GraphQL em React, é utilizado o **Apollo Client**, uma biblioteca de gerenciamento de estado que facilita a integração de uma API GraphQL com a aplicação _front-end_.
+Now we will learn how to retrieve data from the _backend_ and display it in the interface. VTEX IO uses [GraphQL](https://graphql.org/) as a language/technology for data transfer, which makes programming our components quite simple. We will modify our Countdown component to search for the _targetDate_ of the **`releaseDate` field of a VTEX product**. To perform GraphQL queries in React, the **Apollo Client** is used, a state management lib that facilitates the integration of a GraphQL API with the _front-end_ application.
 
-A biblioteca **Apollo Client** disponibiliza uma integração nativa com React, por meio de _hooks_. Dessa forma, realizar uma _query_ significa usar um _hook_ que não só realizará as _queries_ e fará o _fetch_ dos dados, mas também proverá cache e atualização do estado da UI. Essa integração, chamada `react-apollo` já está declarada no `package.json`.
+The **Apollo Client** lib offers native integration with React, through _hooks_. Thus, making a _query_ means using a _hook_ that will not only perform the _queries_ and _fetch_ the data, but will also provide caching and updating the UI state. This integration, called `react-apollo` is already declared in `package.json`.
 
-## Preparação
+## Preparation
 
-- Para implementar esta funcionalidade, precisamos **adicionar o nosso bloco `countdown` na página de produto**, e também faremos nossos testes nessa página também. Para isso, faça o seguinte:
+- To implement this functionality, **add our countdown block on the product page** and also do our tests on this page as well. To do this, do the following:
 
-1. Em seu tema clonado (`store-theme`) acesse o arquivo `store/blocks/product.jsonc` e, no bloco `flex-layout.col#right-col` adicione o bloco `countdown`, logo antes do `buy-button`:
+1. On your cloned theme (`store-theme`) access the `store/blocks/product.jsonc` file and, on the `flex-layout.col#right-col` block add the `countdown` block, right before the `buy-button`:
+
    ```diff
        "product-gifts",
    +	"countdown",
        "flex-layout.row#buy-button",
        "availability-subscriber",
    ```
-2. Rode `vtex link` em seu tema novamente (caso o processo já não esteja sendo executado).
-3. Pronto, agora o nosso bloco está na página de produto. Acesse alguma destas páginas e veja o componente `Countdown` renderizado.
 
-## Query de Release Date
+2. Run `vtex link` on your theme again (if the process is not already running).
 
-1.  Crie uma pasta `react/queries` e nela adicione um arquivo `productReleaseDate.graphqql` que irá conter a _query_ a ser feita. Em particular, essa _query_ irá receber um termo, que será **o slug do produto a ser recuperado a data de lançamento**. Ela chamará o _resolver_ `product`, já disponível pela app `vtex.search-graphql`, e recuperaremos apenas o campo que precisamos.
+3. Done, now our block is on the product page. Access any of these pages and see the rendered `Countdown` component.
+
+## Release Date Query
+
+1.  Create a folder `react/queries` and add a `productReleaseDate.graphqql` file to it that will contain the _query_ to be made. In particular, this _query_ will receive a term, which will be **the product slug to be retrieved at the launch date**. It will call the _resolver_ `product`, already available through the`vtex.search-graphql` app, and we will retrieve only the field we need.
+
     ```
     query productReleaseDate($slug: String){
     	  product(slug: $slug) {
@@ -30,13 +34,17 @@ A biblioteca **Apollo Client** disponibiliza uma integração nativa com React, 
     	  }
     }
     ```
-    > Perceba que a query precisará do _slug_ do produto que buscamos. Para isso, **recuperaremos esta informação do contexto de Produto da VTEX**.
-2.  Para utilizar essa query, é necessário **adicionar a app `vtex.search-graphql` como dependência em sua app.** Também precisaremos utilizar o hook `useProduct`, exportado pela app `vtex.product-context`, para recuperar o slug do produto que está carregado na página. Para isso, no `manifest.json` de sua app, adicione em `dependencies`:
+
+    > Note that the query will need the _slug_ of the product we are looking for. To do so, **retrieve this information of the VTEX Product context**.
+
+2.  To use this query, it is necessary **to add the `vtex.search-graphql` app as a dependency on your app**. We will also need to use the `useProduct` hook, exported by the `vtex.product-context` app, to retrieve the product slug that is loaded on the page. To do this, in your app's `manifest.json`, add in dependencies:
+
     ```
     "vtex.search-graphql": "0.x",
     "vtex.product-context": "0.x"
     ```
-3.  Agora, é necessário importar os hook `useQuery`, para fazer a _query_ que retornará o dado que descrevemos, e `useProduct`, para nos dar a informação sobre o slug do produto atual. Além disso, também é preciso importar a _query_, definida anteriormente, que se encontra no arquivo `productReleaseDate.graphqql`. Vale ressaltar também que a *prop* `targetDate` não será mais necessária.
+
+3.  Now, it is necessary to import the `useQuery` hooks, to make the _query_ that will return the data we described, and `useProduct`, to give us information about the current product slug. In addition, it is also necessary to import the _query_ defined previously, which is found in the file `productReleaseDate.graphqql`. It is also important to notice that the prop `targetDate` will no longer be necessary.
 
     ```diff
     // react/Countdown.tsx
@@ -49,21 +57,21 @@ A biblioteca **Apollo Client** disponibiliza uma integração nativa com React, 
     +import productReleaseDateQuery from './queries/productReleaseDate.graphql'
     ```
 
-4.  Defina a query usando o `productReleaseDateQuery` importado e o `useQuery`, usando os dados do `useProduct()`:
+4.  Define the query using the `productReleaseDateQuery` importaded and the `useQuery`, using the `useProduct()` data:
 
-    ```diff
-    + const { product: { linkText } } = useProduct()
-    + const { data, loading, error } = useQuery(productReleaseDateQuery, {
-    +   variables: {
-    +     slug: linkText
-    +   },
-    +   ssr: false
-    + })
-    ```
+      ```diff
+      + const { product: { linkText } } = useProduct()
+      + const { data, loading, error } = useQuery(productReleaseDateQuery, {
+      +   variables: {
+      +     slug: linkText
+      +   },
+      +   ssr: false
+      + })
+      ```
 
-    > `linkText` será igual a `'red-analogic-coffee-and-tea-machine'`, por exemplo, quando o seu componente for renderizado na página deste produto.
+    > `linkText` will be the same as `'red-front-loading-washer'`, for example, when your component is rendered in this product's page.
 
-    Além disso, é preciso tratar os casos de *loading* e *error* ao utilizar o *hook* `useQuery`. Para isso, é possível retornar um `span` em cada um dos casos, como no exemplo abaixo:
+    Besides, it is important to deal with the cases in which there is no data fetched when using useQuery: *loading* and *error*. In those cases, it is possible to return a span, such as the example below:
     ```tsx
     if (loading) {
       return (
@@ -75,23 +83,13 @@ A biblioteca **Apollo Client** disponibiliza uma integração nativa com React, 
     if (error) {
       return (
         <div>
-          <span>Erro!</span>
+          <span>Error!</span>
         </div>
       )
     }
-    if (!product) {
-      return (
-        <div>
-          <span>Não há contexto de produto</span>
-        </div>
-      )
-    }
-
     ```
 
-    
-
-5.  Após enviar as modificações, acesse uma página de produto e verifique se a _query_ está funcionando através de um `console.log({data})` após a chamada do `useQuery`, que deve mostrar algo como isso:
+5.  After sending the changes, access a product page and note that the _query_ is working through a `console.log({data})` after calling `useQuery`, which should show something like this:
 
     ```ts
     {
@@ -104,12 +102,13 @@ A biblioteca **Apollo Client** disponibiliza uma integração nativa com React, 
     }
     ```
 
-6.  Para fazer com que o Countdown marque as horas para o `releaseDate` do produto, mude o parâmetro da função `tick`. Você também pode remover as `props` recebidas no componente, já que não serão mais usadas.
+6.  To make Countdown set the hours for the product's `releaseDate`, change the `tick` function parameter. You can also remove the `props` received in the component, as they will no longer be used.
+
     ```diff
     -tick(targetDate, setTime)
     +tick(data?.product?.releaseDate || DEFAULT_TARGET_DATE, setTime)
     ```
 
-Resultado no produto _Red Front-Loading Washer_:
+Result using the _Red Front-Loading Washer_ product:
 
 ![image](https://user-images.githubusercontent.com/18706156/79596495-0fc28c00-80b7-11ea-8361-35075dba3bd5.png)

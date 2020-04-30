@@ -1,50 +1,42 @@
-# Conhecendo uma *app* VTEX IO
+# Getting to know an app on VTEX IO
 
-## Introdução
-Antes de começar, é necessário relembrar alguns conceitos importantes para uma maior compreensão do fluxo lógico ao desenvolver uma *app*.
+## Introduction
+
+Before we start, it's necessary to remind some important concepts of the logical for a better understanding of the logical workflow when developing an app.
 
 ## manifest.json
 
 ### *vendor*
-  Define o nome da conta VTEX que está desenvolvendo a *app*. Essa conta é responsável pela manutenção e distribuição da *app* (pode ser instalada em outras contas ou somente na própria) 
-  
-  >O *vendor* `vtex` é utilizado em casos de *apps* nativas.
 
-### *name*
+It defines the name of the VTEX account that is developing the app. This account is responsible for its maintenance and distribution (the app can be installed in other accounts or only in its own)
 
-Identifica o nome da aplicação. Não deve ter caracteres especiais - exceto `-` - ou caracteres maiúsculos. 
+>The `vtex` vendor is used for native apps
 
-### *version*
+### *name* 
 
-Identifica a versão atual da *app*. Para versionamento, utilizamos a especificação [Semantic Versioning 2.0.0](https://semver.org/). O formato do versionamento é bem definido, com o uso de *patches*, *minors* e *majors*. 
+It identifies the name of the application. It should not contain any special characters (except from `-`) or uppercase characters.
 
-Abaixo um resumo da especificação:
+### *version* 
 
-- *Patches*: você deve criar um *patch* quando está consertando um bug de forma retrocompatível
-- *Minors*: você deve criar uma versão *minor* quando adicionar funcionalidade de forma retrocompatível.
-- *Majors*: você deve criar uma versão *major* quando você realiza mudanças incompatíveis de API (o que costumamos chamar de ***breaking changes***)
+It identifies the current app version. We use the [Semantic Versioning 2.0.0](https://semver.org/) specification for versioning. The format is well defined, divided in *patch*, *minor* and *major* releases.
 
-Exemplo: Se uma API que está na versão `2.3.2` e uma nova funcionalidade não tiver *breaking changes*, você pode atualizar a versão para `2.4.0`.
+You can find bellow a summary of the specification: 
 
-No momento que o *deploy* é feito, há um *worker* chamado *housekeeper* responsável por atualizar a versão automaticamente para todas as contas.  No caso de *minors* e *patches*, o *housekeeper* atualiza a app automaticamente em todas as contas, já que as mudanças são retrocompatíveis. Atualizações de *majors*, no entanto, possuem *breaking changes*, por isso o *housekeeper* não atualiza a *app* em todas as contas; sendo assim, a atualização deve ser feita manualmente.
+- *Patches*: Should be used for bug fixes that are backwards compatible 
+- *Minors*: Should be used to add a new backwards compatible feature 
+- *Majors*: Should be used when API incompatible changes are made (*breaking changes*)
 
-### *builders*
+For example: If an API is at version `2.3.2` and it adds a new non breaking change feature, it can then be updated to version `2.4.0`.
 
-O desenvolvimento de apps no VTEX IO utiliza o conceito de [*Code as Configuration (CaC)*](https://www.locallyoptimistic.com/post/code-as-configuration/). Este paradigma é abstraído através do campo de `builders` que facilita o desenvolvimento, abstraindo a configuração de serviços. 
-
-Exemplo: para criar uma extensão no painel administrativo criam-se apps que utilizam o builder de `admin`. 
-
-![image](https://user-images.githubusercontent.com/18701182/76098199-c9eab200-5fa7-11ea-949d-6ac16ebb837a.png)
-
-Ao linkar a app, portanto, uma pasta de nome correspondente é enviada ao seu *builder*, que, por sua vez, transforma cada arquivo em configuração para o serviço competente.
+At the moment the deployment is made, there is a worker called *housekeeper* which is responsible for updating automatically the new version for every account. It will, therefore, update all new *minor* and *patch* releases because of its backwards compatibility. It will not, however, automatically update *major* versions since it might come with dependency changes. 
 
 ### *dependencies*
 
-Uma *app* pode depender de outras aplicações. Esse campo lista todas as dependências necessárias para o correto funcionamento da *app*.
+An app might depend on other applications. This field lists all of the necessary dependencies for the correct app functioning. 
 
-## Exemplo
+## Example
 
-No exemplo da estrutura do `manifest.json` abaixo, é possível observar características mencionadas acima. Em particular, a versão é `0.0.1`, onde os números são, respectivamente, *major*, *minor* e *patch*.
+In the example of the `manifest.json` structure below, it's possible to see characteristics pointed out above. In particular, the app version is `0.0.1` and these numbers correspond respectively to its *major*, *minor* and *patch*.
 
 ```json
 {
@@ -70,3 +62,6 @@ No exemplo da estrutura do `manifest.json` abaixo, é possível observar caracte
   "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-a pi/master/gen/manifest.schema"
 }
 ```
+
+
+
