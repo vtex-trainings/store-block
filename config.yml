@@ -6,7 +6,7 @@ template:
   repo: store-block-template
 before:
   - body: 01_manifest.md
-    title: Conhecendo uma app VTEX IO
+    title: Getting to know an app on VTEX IO
     type: createIssue
 steps:
   - title: Getting to know an app on VTEX IO
