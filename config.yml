@@ -170,7 +170,7 @@ steps:
     translations:
       en:
         title: Connecting _backend_ and _frontend_
-        description: Using VTEX catalog data within your component
+        description: Using VTEX catalog data within your component.
     event: issues.closed
     link: '{{ repoUrl }}/issues/8'
     actions:
