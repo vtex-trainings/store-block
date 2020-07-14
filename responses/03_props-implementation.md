@@ -42,7 +42,7 @@ Now we have an `h1` element rendered, it's possible to used it to display inform
     ```
     The *schema* is also responsible for defining the labels that will be displayed to the user when editing the block content on the form.
 
-## Atividade
+## Activity
 
 1. In the interface defined in `Countdown.tsx`, add a *prop* called `targetDate`, its type is *string*. We are, hence, defining a component *prop* that will be used to initialize the countdown.
     
