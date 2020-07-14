@@ -65,17 +65,30 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    > A biblioteca _react-intl_ dá suporte a várias maneiras de configuração e internacionalização, vale a pena verificá-las.
 
 3. Adicione a biblioteca usando `yarn add react-intl` na pasta _react_
+
 4. No código do seu componente `Countdown.tsx` **importe o FormattedMessage**
    ```diff
    //react/Countdown.tsx
    +  import { FormattedMessage } from 'react-intl'
    ```
+
 5. Adicione uma constante que será o seu título:
    ```tsx
    //react/Countdown.tsx
    const titleText = title || <FormattedMessage id="countdown.title" />
    ```
-6. Agora, junte o título e o contador para renderizá-los. Para isso, defina um container por fora. Além disso, o texto do título será passado através da _prop_ `title`:
+
+6.  Adicione uma nova *prop* chamada `title`, ela é do tipo *string*. Com isso, estamos definindo uma *prop* do componente que será utilizada para o título do contador.
+
+    ```diff
+    // react/Countdown.tsx
+    interface CountdownProps {
+      targetDate: string
+    + title: string
+    }
+    ```
+
+7. Agora, junte o título e o contador para renderizá-los. Para isso, defina um container por fora. Além disso, o texto do título será passado através da _prop_ `title`:
 
    ```tsx
    //react/Countdown.tsx
@@ -112,7 +125,7 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    const CSS_HANDLES = ["container", "countdown", "title"]
    ```
 
-7. Por fim, é preciso adicionar a _prop_ de `title` no _schema_:
+8. Por fim, é preciso adicionar a _prop_ de `title` no _schema_:
    ```diff
    //react/Countdown.tsx
    Countdown.schema = {
