@@ -70,12 +70,19 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    //react/Countdown.tsx
    +  import { FormattedMessage } from 'react-intl'
    ```
-5. Adicione uma constante que será o seu título:
+5. Adicione uma nova _prop_ ao `CountdownProps`:
+    ```diff
+    interface CountdownProps {
+    + title: string
+      targetDate: string
+    }
+    ```
+6. Adicione uma constante que será o seu título:
    ```tsx
    //react/Countdown.tsx
    const titleText = title || <FormattedMessage id="countdown.title" />
    ```
-6. Agora, junte o título e o contador para renderizá-los. Para isso, defina um container por fora. Além disso, o texto do título será passado através da _prop_ `title`:
+7. Agora, junte o título e o contador para renderizá-los. Para isso, defina um container por fora. Além disso, o texto do título será passado através da _prop_ `title`:
 
    ```tsx
    //react/Countdown.tsx
@@ -112,7 +119,7 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    const CSS_HANDLES = ["container", "countdown", "title"]
    ```
 
-7. Por fim, é preciso adicionar a _prop_ de `title` no _schema_:
+8. Por fim, é preciso adicionar a _prop_ de `title` no _schema_:
    ```diff
    //react/Countdown.tsx
    Countdown.schema = {
@@ -135,6 +142,6 @@ Você já deve ter aprendido a usar o nosso **builder _messages_**, e será atra
    }
    ```
 
-Pronto! Agora, para testar sua loja em outros idiomas basta adicionar a _query string_ `/?cultureInfo=pt-br` ou `/?cultureInfo=en-ar` na URL, por exemplo. Ao utilizar tal URL, o resultado esperado é esse aqui:
+Pronto! Agora, para testar sua loja em outros idiomas basta adicionar a _query string_ `/?cultureInfo=pt-br` ou `/?cultureInfo=es-ar` na URL, por exemplo. Ao utilizar tal URL, o resultado esperado é esse aqui:
 
 ![image](https://user-images.githubusercontent.com/19495917/75484759-23d7f000-5988-11ea-8b0a-63a5fce4ea7e.png)
