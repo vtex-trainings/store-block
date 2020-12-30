@@ -16,164 +16,21 @@ preferences:
         value: pt
 before:
   - body: 01_manifest.md
-    title: Getting to know an app on VTEX IO
+    title: Custom blocks course
     type: createIssue
 steps:
-  - title: Getting to know an app on VTEX IO
+  - title: Custom blocks course
     description: >-
       In this step, you'll learn how an app's files are organized in VTEX IO and
       what each field of the manifest.json means
     translations:
       pt:
-        title: Conhecendo uma app VTEX IO
+        title: Curso de blocos customizados
         description: >-
           Neste passo, você irá aprender como se organizam os arquivos em uma
           app VTEX IO e o que cada campo no manifest.json significa
     event: issues.closed
     link: '{{ repoUrl }}/issues/1'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 1
-        data:
-          nextIssue: '2'
-      - body: 02_component.md
-        title: Linking an app and using it on a store's theme
-        type: createIssue
-  - title: Linking an app and using it on a store's theme
-    description: >-
-      After modifying something in the app's code, we'll link it and check
-      results on store
-    translations:
-      pt:
-        title: Linkando uma app e utilizando-a no tema da loja
-        description: >-
-          Após modificar algo no código da app, iremos linká-la e verificar o
-          resultado na loja, após haver adicionado a app no tema
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/2'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 2
-        data:
-          nextIssue: '3'
-      - body: 03_props-implementation.md
-        title: Making the countdown block customizable
-        type: createIssue
-  - title: Making the countdown block customizable
-    description: >-
-      Through React's props API, you'll learn how to make blocks configurable
-      with Store Framework
-    translations:
-      pt:
-        title: Tornando o bloco countdown customizável
-        description: >-
-          Através da API de props do React, você aprendenrá como tornar seus
-          blocos configuráveis com o Store Framework
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/3'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 3
-        data:
-          nextIssue: '4'
-      - body: 04_countdown-implementation.md
-        title: Creating the countdown block feature
-        type: createIssue
-  - title: Creating the countdown block feature
-    description: 'Using React''s hooks, we''ll finish the countdown block implementation'
-    translations:
-      pt:
-        title: Criando a funcionalidade do bloco countdown
-        description: >-
-          Utilizando os hooks do React.js, iremos finalizar a implementação do
-          bloco countdown
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/4'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 4
-        data:
-          nextIssue: '5'
-      - body: 05_css-handles.md
-        title: Modifying the countdown block to have configurable styles
-        type: createIssue
-  - title: Modifying the countdown block to have configurable styles
-    description: >-
-      VTEX IO offers a way to make CSS styling customizable: CSS handles. We'll
-      also see how to work with VTEX Tachyons
-    translations:
-      pt:
-        title: Modificando o bloco countdown para ter um estilo configurável
-        description: >-
-          O VTEX IO oferece uma maneira para seus blocos poderem ter um estilo
-          CSS customizável: CSS Handles. Também veremos sobre a biblioteca de
-          CSS funcional Tachyons
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/5'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 5
-        data:
-          nextIssue: '6'
-      - body: 06_messages.md
-        title: Internationalization practices in VTEX IO
-        type: createIssue
-  - title: Internationalization practices in VTEX IO
-    description: >-
-      To make our blocks reusable by anyone, we'll make sure to follow good
-      practices of internationalization supported by VTEX IO
-    translations:
-      pt:
-        title: Práticas de internacionalização no VTEX IO
-        description: >-
-          Para que os nossos blocos sejam usados por todo mundo, deveremos nos
-          atentar às boas práticas de internacionalização suportadas pelo VTEX
-          IO
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/6'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 6
-        data:
-          nextIssue: '7'
-      - body: 07_separating-title.md
-        title: Componentizing the countdown block
-        type: createIssue
-  - title: Componentizing the countdown block
-    description: >-
-      To make custom blocks flexible, we must pay attention to the granularity
-      of the visual components of each block
-    translations:
-      pt:
-        title: Componentizando o bloco countdown
-        description: >-
-          Para que os blocos que criamos sejam flexíveis, devemos atentar a
-          granularidade dos componentes visuais de cada bloco.
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/7'
-    actions:
-      - type: respond
-        with: new-issue.md
-        issue: 7
-        data:
-          nextIssue: '8'
-      - body: 08_react-apollo.md
-        title: Connecting _backend_ and _frontend_
-        type: createIssue
-  - title: Connecting _backend_ and _frontend_
-    description: Using VTEX catalog data within your component
-    translations:
-      pt:
-        title: Conectando backend e frontend
-        description: Utilizando dados do catálogo da VTEX em seu componente
-    event: issues.closed
-    link: '{{ repoUrl }}/issues/8'
     actions:
       - type: respond
         with: congrats_course.md
